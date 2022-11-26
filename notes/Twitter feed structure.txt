@@ -1,0 +1,7 @@
+{'user_name': tweet.user.name,
+'user_location':tweet.user.location,                                     'user_description': tweet.user.description,
+'user_verified': tweet.user.verified,
+'date': tweet.created_at,
+'text': text,
+'hashtags': [hashtags if hashtags else None],
+'source': tweet.source}
