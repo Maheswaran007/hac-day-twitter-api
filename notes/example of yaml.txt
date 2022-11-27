@@ -1,0 +1,36 @@
+steps:
+
+  - id: "build treasuremap docker image"
+    name: "gcr.io/cloud-builders/docker"
+    timeout: 600s
+    args:
+      - "build"
+      - "-t"
+      - "eu.gcr.io/$PROJECT_ID/app-<YOUR_CODE_NAME>:$SHORT_SHA"
+      - "."
+
+  - id: "push Treasure map to GCP Container Registry"
+    name: "gcr.io/cloud-builders/docker"
+    timeout: 600s
+    args:
+      - "push"
+      - "eu.gcr.io/$PROJECT_ID/app-<YOUR_CODE_NAME>:$SHORT_SHA"
+
+  - id: "deploy Treasure map on Cloud Run"
+    name: "gcr.io/cloud-builders/gcloud"
+    timeout: 600s
+    args:
+      - "run"
+      - "deploy"
+      - "app-<YOUR_CODE_NAME>"
+      - "--platform"
+      - "managed"
+      - "--image"
+      - "eu.gcr.io/$PROJECT_ID/app-<YOUR_CODE_NAME>:$SHORT_SHA"
+      - "--region"
+      - "europe-west1"
+      - "--memory"
+      - "1Gi"
+      - "--cpu"
+      - "2"
+      - "--allow-unauthenticated"
