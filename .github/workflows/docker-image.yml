@@ -1,0 +1,60 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name
+      
+    #- name: Docker Image Artifact Upload
+      # You may pin to the exact commit or the version.
+      # uses: ishworkh/docker-image-artifact-upload@44d2be71d9d366aec2f19670ff531949e19439e8
+      # uses: ishworkh/docker-image-artifact-upload@v1
+      # with:
+        # Docker image to upload
+        # image: my-image-name
+        # Retention days for the image artifact
+        # retention_days: 0
+        
+    # - name: gcr-upload-action
+      # You may pin to the exact commit or the version.
+      # uses: Dayanand-Chinchure/gcr-upload-action@7bf581fcc9a66a8d56a44829fb4e9681f2d653b2
+      # uses: Dayanand-Chinchure/gcr-upload-action@1.2
+      # with:
+        # Contents of a Service Account JSON Key
+        # service_account: ${{ secrets.GCLOUD_SERVICE_KEY }}
+        # Registry host name (must match dst image)
+        # registry: us.gcr.io
+        # Source image name
+        # source_image: my-image-name
+        # Destination image name
+        # destination_image: my-api
+      
+    # - name: Push Docker Image to GAR
+      # You may pin to the exact commit or the version.
+      # uses: par-tec/docker-push-gar-image@d9b03cad1bca7573072e5da98c6c320e84014da0
+      # uses: par-tec/docker-push-gar-image@v0.0.3
+      # with:
+        # Docker Image Name
+        # image_name: docker-repo
+        # Docker Image Tag
+        # image_tag: my-image-tag
+        # Google Artifact Repository Host
+        # gar_hostname: europe-west4-docker.pkg.dev
+        # Google Artifact Repository Project ID
+        # gar_project: ${{ secrets.GCLOUD_PROJECT_ID }} 
+        # Google Artifact Repository Service Key
+        # gar_service_account: ${{ secrets.GCLOUD_SERVICE_KEY }}
+        
+      
